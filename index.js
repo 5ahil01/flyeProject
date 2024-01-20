@@ -1,5 +1,5 @@
 //Fetching apis through getInfo function
-
+let rarr;
 function search() {
   let input = document.querySelector(".search > input");
   getInfo(input.value);
@@ -15,7 +15,8 @@ async function getInfo(username) {
   let dataR = await responseRepo.json();
 
   EditProfile(dataP);
-  compoCreate(dataR);
+  rarr = dataR;
+  displayPagination();
   console.log(dataR);
 }
 
@@ -38,10 +39,34 @@ function EditProfile(Pdata) {
   subtitle.textContent = Pdata.bio;
 }
 
-//This function will create new components for repos
-function compoCreate(darr) {
-  for (let index = 0; index < darr.length; index++) {
-    // Create the main container div with class "card" and inline style
+//Pagination
+function displayPagination() {
+  const totalPages = Math.ceil(rarr.length / cardsPerPage);
+
+  for (let i = 1; i <= totalPages; i++) {
+    const pageButton = document.createElement("button");
+    pageButton.innerText = i;
+    pageButton.addEventListener("click", () => {
+      currentPage = i;
+      repoCreate(currentPage);
+    });
+    document.querySelector(".pagination").appendChild(pageButton);
+  }
+}
+const cardsPerPage = 6;
+let currentPage = 1;
+
+//This function will create  repo cards inside the main container
+//RepoCreate will be executed for each page seperatly
+function repoCreate(page) {
+  const startIndex = (page - 1) * cardsPerPage;
+  const endIndex = startIndex + cardsPerPage;
+  const currentCards = rarr.slice(startIndex, endIndex);
+
+  //Emptying the main container , for inserting new page's repo cards
+  document.querySelector(".main").innerHTML = "";
+
+  currentCards.forEach((cardData) => {
     var cardContainer = document.createElement("div");
     cardContainer.className = "card";
     cardContainer.style.width = "25rem";
@@ -53,23 +78,23 @@ function compoCreate(darr) {
     // Create the h5 element with class "card-title" and set its text content
     var cardTitle = document.createElement("h5");
     cardTitle.className = "card-title";
-    cardTitle.textContent = darr[index].name;
+    cardTitle.textContent = cardData.name;
 
     // Create the p element with class "card-text" and set its text content
     var cardText = document.createElement("p");
     cardText.className = "card-text";
 
-    if (darr[index].description === null) {
+    if (cardData.description === null) {
       cardText.textContent = "No description is available ";
     } else {
-      cardText.textContent = darr[index].description;
+      cardText.textContent = cardData.description;
     }
 
     // Create the button element with class "button-56" and role "button"
     var button = document.createElement("button");
     button.className = "button-56";
     button.setAttribute("role", "button");
-    button.textContent = darr[index].language;
+    button.textContent = cardData.language;
 
     // Append the elements to build the structure
     cardBody.appendChild(cardTitle);
@@ -78,8 +103,7 @@ function compoCreate(darr) {
 
     cardContainer.appendChild(cardBody);
 
-    var main = document.querySelector(".main");
-    // Append the main container to the body of the document
-    main.appendChild(cardContainer);
-  }
+    // Append the cardContainer to the main of the document
+    document.querySelector(".main").appendChild(cardContainer);
+  });
 }

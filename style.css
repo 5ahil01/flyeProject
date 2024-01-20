@@ -1,39 +1,42 @@
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html,body{
+html,
+body {
   height: 100vh;
   width: 100vw;
   background-color: rgb(243, 184, 184);
 }
 
-.container{
-  margin-top:3rem;  
+.container {
+  margin-top: 3rem;
   padding: 20px;
   display: column;
-  justify-content: center; 
-  align-items: center; 
-  gap:40px;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
 }
 
-.header{
+.header {
   display: flex;
   justify-content: space-between;
 }
 
-.card{
+.card {
   width: 500px;
-  box-shadow: rgb(85, 91, 255) 0px 0px 0px 3px, rgb(31, 193, 27) 0px 0px 0px 6px, rgb(255, 217, 19) 0px 0px 0px 9px, rgb(255, 156, 85) 0px 0px 0px 12px, rgb(255, 85, 85) 0px 0px 0px 15px;
+  box-shadow: rgb(85, 91, 255) 0px 0px 0px 3px, rgb(31, 193, 27) 0px 0px 0px 6px,
+    rgb(255, 217, 19) 0px 0px 0px 9px, rgb(255, 156, 85) 0px 0px 0px 12px,
+    rgb(255, 85, 85) 0px 0px 0px 15px;
 }
 
-.main{
-  display: flex;
-  gap: 50px;
+.main {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px; /* Adjust the gap as needed */
 }
-
 
 .button-56 {
   align-items: center;
@@ -44,7 +47,7 @@ html,body{
   color: #111;
   cursor: pointer;
   display: flex;
-  font-family: Inter,sans-serif;
+  font-family: Inter, sans-serif;
   font-size: 16px;
   height: 48px;
   justify-content: center;
@@ -70,7 +73,7 @@ html,body{
   position: absolute;
   top: -2px;
   transform: translate(8px, 8px);
-  transition: transform .2s ease-out;
+  transition: transform 0.2s ease-out;
   z-index: -1;
 }
 
@@ -85,4 +88,8 @@ html,body{
 
 .button-56:hover {
   outline: 0;
+}
+
+.pagination {
+  margin-top: 30px;
 }
