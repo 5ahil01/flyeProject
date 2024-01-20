@@ -16,7 +16,6 @@ async function getInfo(username) {
 
   EditProfile(dataP);
   compoCreate(dataR);
-  console.log(typeof dataR);
   console.log(dataR);
 }
 
