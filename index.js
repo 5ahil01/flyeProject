@@ -17,37 +17,55 @@ async function getInfo(username) {
   EditProfile(dataP);
   rarr = dataR;
   displayPagination();
-  console.log(dataR);
+  console.log(dataP);
 }
 
 //This function will update the profile
 function EditProfile(Pdata) {
-  const firstDiv = document.querySelector("div > img");
-  const firstParagraph = document.querySelector("div > p");
+  const imageProfile = document.querySelector("div > img");
+  const GHlink = document.querySelector("div > a");
 
   // Select the second <div> and its child elements
   const githubProfileDiv = document.querySelector(".github-profile");
-  const title = githubProfileDiv.querySelector("h1");
-  const subtitle = githubProfileDiv.querySelector("h2");
-  const team = githubProfileDiv.querySelector("p:nth-child(3)");
-  const twitter = githubProfileDiv.querySelector("p:nth-child(4)");
+  const title = document.querySelector(".UserfullName");
+  const gitHUBuserName = document.querySelector(".GHuserName");
+  const bio = document.querySelector(".bio");
+  const location = document.querySelector(".Location");
+  const twitter = document.querySelector(".twitter");
 
   //Updating profile data according to username
-  firstDiv.setAttribute("src", Pdata.avatar_url);
-  firstParagraph.textContent = Pdata.login;
+  imageProfile.setAttribute("src", Pdata.avatar_url);
+  GHlink.textContent = Pdata.html_url;
+  GHlink.setAttribute("href", Pdata.html_url);
   title.textContent = Pdata.name;
-  subtitle.textContent = Pdata.bio;
+  gitHUBuserName.textContent = Pdata.login;
+  bio.textContent = Pdata.bio;
+
+  if (Pdata.location == null) {
+    location.textContent = "Location : not available";
+  } else {
+    location.textContent = "Location : " + Pdata.location;
+  }
+  if (Pdata.twitter == null) {
+    twitter.textContent = "Twitter : not available";
+  } else {
+    twitter.textContent = "Twitter :" + Pdata.twitter;
+  }
 }
 
 //Pagination
 function displayPagination() {
   const totalPages = Math.ceil(rarr.length / cardsPerPage);
+  let pageBtnArr = [];
 
   for (let i = 1; i <= totalPages; i++) {
     const pageButton = document.createElement("button");
+    pageBtnArr.push(pageButton);
     pageButton.innerText = i;
-    pageButton.addEventListener("click", () => {
+    pageButton.addEventListener("click", (e) => {
+      pageBtnArr.forEach((p) => p.classList.remove("highlight"));
       currentPage = i;
+      e.target.classList.add("highlight");
       repoCreate(currentPage);
     });
     document.querySelector(".pagination").appendChild(pageButton);
